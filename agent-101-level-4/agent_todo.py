@@ -315,10 +315,15 @@ def _utc_now() -> datetime:
     return datetime.now(TZ).replace(microsecond=0)
 
 def _week_bounds_utc(now: Optional[datetime] = None) -> Tuple[datetime, datetime]:
+    """
+    Rolling next-7-days window starting today at 00:00.
+    Example: if now is Sat Oct 18, the range is Oct 18 00:00 → Oct 25 00:00.
+    """
     now = now or _utc_now()
-    monday = (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
-    next_monday = monday + timedelta(days=7)
-    return monday, next_monday
+    start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    end = start + timedelta(days=7)
+    return start, end
+
 
 def _today_bounds_utc(now: Optional[datetime] = None) -> Tuple[datetime, datetime]:
     now = now or _utc_now()
@@ -669,7 +674,12 @@ def print_help() -> None:
         "  set reminder for task <id> at <when...>\n"
         "  list reminders | cancel reminder <id> | snooze reminder <id> by <N> minutes\n"
         f"\nDisplay timezone: {LOCAL_TZ_NAME} (set LOCAL_TZ env to change)\n"
+        "Scopes:\n"
+        "  today      = today (local day)\n"
+        "  this week  = next 7 days (rolling)\n"
+        "  overdue    = due date passed and not done\n"
     )
+
 
 # --------------------------- Background Scheduler ------------------------ #
 
