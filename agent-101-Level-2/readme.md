@@ -1,97 +1,77 @@
-# 🧠 Agent-101: Your First Agentic AI (OpenAI Responses + Python)
+# 🧠 Agent-101 — Level 2: Natural-Language Due Dates (OpenAI Responses + SQLite)
 
-This project is a **minimal working AI agent** that understands natural language
-and performs real actions using **tools (functions)** — not just chat.
+Level 2 upgrades your Level 1 To-Do agent so it can understand due dates written in **natural language** (e.g., “tomorrow 5pm”, “next Monday 8am”), parse them into a **real timestamp**, and sort tasks by the actual time.
 
-Unlike a normal chatbot, this agent can:
-✅ Interpret your request  
-✅ Decide which tool (function) to use  
-✅ Execute real code  
-✅ Store & retrieve data from a local database  
-✅ Persist state between runs
+## 🚀 What’s new in Level 2
 
----
+- ✅ **Natural-language date parsing** using `dateparser`
+- ✅ New DB column **`due_at`** (ISO8601 datetime with timezone)
+- ✅ Stores both:
+  - `due` → the original text you typed
+  - `due_at` → parsed machine-readable datetime
+- ✅ Smarter listing: orders by `done`, then earliest `due_at`
+- ✅ Robust extraction: if the model passes only a single string (e.g., “buy milk tomorrow 5pm”), the agent **auto-extracts** the due phrase from the title
 
-## 🚀 What this Agent Does
-
-This is a **To-Do List Agent** that:
-- Adds tasks (e.g., “add buy milk tomorrow 5pm”)
-- Lists pending tasks
-- Marks tasks as complete
-
-Tasks are saved in a **SQLite database**, so they remain even if you close the program.
+> TL;DR — The agent now *understands time*, not just text.
 
 ---
 
-## 🧩 How it Works (Simple Explanation)
+## 🧩 Architecture snapshot
 
-| Part | Role |
-|-----|------|
-| OpenAI Responses API | The brain – decides what to do |
-| Python functions | The agent’s “hands” (tools) |
-| SQLite DB | Long-term memory |
-| Natural language | You talk normally; no code required |
 
-When you say:
-
-add buy milk tomorrow 5pm
-
-The model decides:
-→ “I should call add_task()”  
-→ It passes arguments  
-→ Python executes the function  
-→ Response is shown back to user  
-→ Task is persisted in the DB
+- The **Responses API** still chooses which tool to call.
+- Python functions act as “tools”.
+- SQLite is the persistent memory.
+- Level 2 adds **date parsing** before writing to DB.
 
 ---
 
-## 🛠 Tech Stack
+## 📦 Requirements
 
-| Tech | Purpose |
-|------|---------|
-| Python 3 | base runtime |
-| OpenAI Responses API | agent orchestration |
-| SQLite | local state & persistence |
-| Function Calling | enables “tool use” |
-| Fallback local summary | compatible with older SDKs |
-
----
-
-## 📦 Installation
+Inside this project’s own virtual environment:
 
 ```bash
-# Clone your repo (already done)
-git clone https://github.com/niraj-meshram/OpenAI.git
-cd OpenAI/agent-101
+pip install openai dateparser pytz
 
-# (optional) create a virtual environment
-python -m venv .venv
-.\.venv\Scripts\activate  # Windows
+Timezone
 
-# Install OpenAI SDK
-pip install openai
+setx AGENT_TIMEZONE "America/Denver"
 
-setx OPENAI_API_KEY "your_api_key_here"
+🗄️ Database schema (Level 2)
+
+| column     | type    | description                        |
+| ---------- | ------- | ---------------------------------- |
+| id         | INTEGER | primary key                        |
+| title      | TEXT    | task title                         |
+| due        | TEXT    | original natural-language due text |
+| due_at     | TEXT    | parsed ISO8601 datetime (TZ aware) |
+| done       | INTEGER | 0/1                                |
+| created_at | TEXT    | timestamp when task was created    |
+
+▶️ Run
 
 python agent_todo.py
 
 add buy milk tomorrow 5pm
+add dentist appointment next Monday 8am
 list my tasks
 complete task 1
 
-agent-101/
- ├── agent_todo.py   # the main agent
- └── README.md       # documentation
 
-| Level | Feature                                                   |
-| ----- | --------------------------------------------------------- |
-| 2     | Natural language → real date parsing (“next Monday”, etc) |
-| 3     | Multiple tools (calendar, email, web search)              |
-| 4     | Long-term memory & personalization                        |
-| 5     | Background actions (cron-like scheduling)                 |
-| 6     | Multi-agent workflows                                     |
-| 7     | UI / web-based interface                                  |
+ASSISTANT:
+Added task #12: buy milk (due: Tue, Oct 21 05:00 PM).
+
+#12 — buy milk (due: Tue, Oct 21 05:00 PM)
+#11 — dentist appointment (due: Mon, Oct 27 08:00 AM)
 
 
-Created by Niraj Meshram
-Guided setup & agent design using OpenAI Responses API
+🔎 Verify parsing in the DB (optional)
+
+PRAGMA table_info(tasks);
+
+SELECT id, title, due, due_at, done
+FROM tasks
+ORDER BY done,
+         CASE WHEN due_at IS NULL THEN 1 ELSE 0 END,
+         due_at ASC,
+         id DESC;
