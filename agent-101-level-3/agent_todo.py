@@ -41,7 +41,7 @@ except ModuleNotFoundError:
     sys.stderr.write("    pip install --upgrade openai\n")
 
 DB_PATH = os.environ.get("TODO_DB_PATH", "todos.db")
-# Use a safe default; can override via env (e.g., gpt-4.1, gpt-4o, etc.)
+# Safe default; can override via env (e.g., gpt-4.1, gpt-4o, etc.)
 MODEL = os.environ.get("AGENT_MODEL", "gpt-4o-mini")
 TZ = timezone.utc  # store timestamps as UTC
 
@@ -369,13 +369,41 @@ def _local_heuristic_fallback(user_text: str) -> Optional[str]:
     # add ...
     if s.startswith("add "):
         raw = user_text[4:].strip()
-        try:
-            r = parse_when(raw)
-            add_task(title=raw, due=r["iso_utc"])
-            return "Task added ✅"
-        except Exception:
-            add_task(title=raw)
-            return "Task added ✅"
+
+        # Try to split off a trailing natural-language when-phrase so
+        #   "buy milk tomorrow 5pm" -> title: "buy milk", when: "tomorrow 5pm"
+        when_pat = re.compile(
+            r"("
+            r"(?:today|tomorrow)(?:\s+\d{1,2}(?::\d{2})?\s*(?:am|pm)?)?"
+            r"|next\s+(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+\d{1,2}(?::\d{2})?\s*(?:am|pm)?"
+            r"|(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+\d{1,2}(?::\d{2})?\s*(?:am|pm)?"
+            r"|\d{4}-\d{2}-\d{2}(?:\s+\d{1,2}(?::\d{2})?)?"
+            r"|\d{1,2}/\d{1,2}(?:\s+\d{1,2}(?::\d{2})?\s*(?:am|pm)?)?"
+            r"|in\s+\d+\s+(?:minutes?|minute|min|hours?|hour|days?|day|weeks?|week)"
+            r"|\d{1,2}(?::\d{2})?\s*(?:am|pm)"
+            r")\s*$",
+            re.IGNORECASE,
+        )
+
+        when_str = None
+        m2 = when_pat.search(raw)
+        if m2:
+            when_str = m2.group(1).strip()
+            title = raw[: m2.start()].strip(" ,.-") or raw
+        else:
+            title = raw
+
+        if when_str:
+            try:
+                r = parse_when(when_str)
+                add_task(title=title, due=r["iso_utc"])
+                return "Task added ✅"
+            except Exception:
+                pass
+
+        # No parse or parse failed -> add without due
+        add_task(title=title)
+        return "Task added ✅"
 
     return None
 
