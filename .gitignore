@@ -1,0 +1,10 @@
+﻿# Python venvs & caches
+**/.venv/
+venv/
+__pycache__/
+*.pyc
+
+# SQLite runtime files
+*.db
+*.db-shm
+*.db-wal
