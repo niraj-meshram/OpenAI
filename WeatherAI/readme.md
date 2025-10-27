@@ -67,6 +67,10 @@ docker run -e OPENAI_API_KEY=sk-... -e PORT=8501 -p 8501:8501 ghcr.io/<your-org-
 # The container entry respects env PORT and HOST, defaults 8501/0.0.0.0
 ```
 
+Healthcheck
+- The container exposes a health endpoint used by Docker HEALTHCHECK at `/_stcore/health`.
+- Example: `docker inspect --format='{{json .State.Health}}' <container>` to view health status.
+
 ---
 
 ## Security Notes
