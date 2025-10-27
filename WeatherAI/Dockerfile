@@ -18,5 +18,4 @@ COPY . .
 EXPOSE 8501
 
 # Run Streamlit
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
-
+CMD ["sh", "-c", "streamlit run streamlit_app.py --server.port ${PORT:-8501} --server.address ${HOST:-0.0.0.0}"]

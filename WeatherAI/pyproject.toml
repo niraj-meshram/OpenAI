@@ -18,3 +18,21 @@ weather-ai = "weather_ai.cli:main"
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+include = "\.(py|pyi)$"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+select = [
+  "E",  # pycodestyle errors
+  "F",  # pyflakes
+  "I",  # isort
+  "UP", # pyupgrade
+  "B",  # flake8-bugbear
+]
+ignore = []
+fix = true
+exclude = ["examples"]
