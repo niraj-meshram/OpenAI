@@ -9,16 +9,41 @@ from weather_ai.utils.units import c_to_f, make_trend_df, format_quick_weather_t
 from weather_ai.tools.api import fetch_forecast, fetch_six_month_trend
 
 
-def _ensure_key_from_windows_env() -> None:
-    if os.name == "nt" and not os.getenv("OPENAI_API_KEY"):
+# Removed Windows registry auto-loading of OPENAI_API_KEY for security hardening.
+
+
+def _ensure_key_from_secrets() -> None:
+    """Populate OPENAI_API_KEY from Streamlit secrets if not set."""
+    if not os.getenv("OPENAI_API_KEY"):
         try:
-            import winreg  # type: ignore
-            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Environment") as key:
-                val, _ = winreg.QueryValueEx(key, "OPENAI_API_KEY")
-                if val:
-                    os.environ["OPENAI_API_KEY"] = val
+            key = st.secrets.get("OPENAI_API_KEY", "")
+            if key:
+                os.environ["OPENAI_API_KEY"] = str(key)
         except Exception:
+            # st.secrets may not be configured
             pass
+
+
+def _ensure_key_from_dotenv() -> None:
+    """Lightweight .env loader for OPENAI_API_KEY only (no dependency)."""
+    if os.getenv("OPENAI_API_KEY"):
+        return
+    try:
+        for candidate in (".env", ".streamlit/.env"):
+            if os.path.exists(candidate):
+                with open(candidate, "r", encoding="utf-8") as fh:
+                    for line in fh:
+                        line = line.strip()
+                        if not line or line.startswith("#"):
+                            continue
+                        if line.startswith("OPENAI_API_KEY="):
+                            val = line.split("=", 1)[1].strip().strip('"').strip("'")
+                            if val:
+                                os.environ["OPENAI_API_KEY"] = val
+                            return
+    except Exception:
+        # Ignore parse errors silently; env remains unset
+        pass
 
 
 def weathercode_emoji_desc(code: int) -> tuple[str, str]:
@@ -49,7 +74,9 @@ def cached_trend(city: str):
 
 
 def render() -> None:
-    _ensure_key_from_windows_env()
+    # Try to populate key from Streamlit secrets or local .env if not set.
+    _ensure_key_from_secrets()
+    _ensure_key_from_dotenv()
 
     if os.name == "nt":
         try:
@@ -200,4 +227,3 @@ def render() -> None:
             if hcols[i].button(label):
                 st.session_state["city_now"] = item["city"]
                 st.session_state["when_now"] = item["when"]
-

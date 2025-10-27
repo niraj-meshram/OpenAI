@@ -8,6 +8,7 @@ node_modules/
 tests/
 .github/
 examples/
+.docker/certs/
 *.pyc
 *.pyo
 *.pyd

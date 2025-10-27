@@ -1,85 +1,29 @@
-﻿# WeatherAI Agent App
+# 🧠 OpenAI Learning Repo
 
-Agentic weather app using the OpenAI Agents SDK + Streamlit.
-Ask for today/tomorrow’s weather or a 6‑month climate history and seasonal outlook. UI supports °C/°F with conversions.
-
----
-
-## Features
-- Agent tools: forecast and 6‑month trend via `@function_tool`
-- Streamlit UI: natural summaries with emoji, metrics, charts, CSV downloads
-- Unit-aware: strictly honors °C/°F selection everywhere
-- Caching: memoized calls for responsive UI
+This repository is my personal playground for learning how to use the **OpenAI API** — step by step.  
+It includes small practical examples (like a To-Do Agent) that demonstrate how function calling, tools, and the new `responses` API work.
 
 ---
 
-## Architecture
-- Package: `weather_ai` (agentic structure)
-  - `agents/weather_agent.py` — Agent definition + tools (`get_forecast`, `get_six_month_trend`)
-  - `tools/api.py` — HTTP/IO with timeouts, geocoding, forecast, climatology
-  - `utils/units.py` — Conversions and display helpers
-  - `ui/app.py` — Streamlit UI composition
-- App entry: `streamlit_app.py` (thin wrapper calling `weather_ai.ui.app.render()`)
-- CLI: `weather_ai/cli.py` (one‑shot; optional interactive mode)
-- Tests: `tests/` (units conversion and formatting)
+## 📌 What this repo covers
+
+| Topic | Status | Description |
+|------|--------|-------------|
+| ✅ API Setup & Keys | Done | How to create and load `OPENAI_API_KEY` |
+| ✅ First API Call | Done | Basic text completion |
+| ✅ Responses API | Done | Using `client.responses.create()` |
+| ✅ Tool / Function Calling | Done | To-Do agent that reads/writes SQLite |
+| 🔜 Agents & Memory | Planned | Multi-step conversations |
+| 🔜 RAG Examples | Planned | Search + Local data |
+| 🔜 Assistants API | Planned | Managed agent example |
 
 ---
 
-## Requirements
+## 🛠 Prerequisites
+
 - Python 3.9+
-- Env var: `OPENAI_API_KEY` (read on startup; Windows registry auto-load supported)
-
----
-
-## Local Setup
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate  # PowerShell
-pip install -r requirements.txt
-
-# API key
-$env:OPENAI_API_KEY="sk-..."        # current shell
-setx OPENAI_API_KEY "sk-..."        # persistent (new shells)
-
-# Run Streamlit (respects env STREAMLIT_SERVER_PORT or CLI --server.port)
-streamlit run streamlit_app.py
-```
-
-Open: http://localhost:8501
-
----
-
-## CLI
-
-```bash
-python -m weather_ai.cli "weather in Phoenix today"
-```
-
----
-
-## Deployment
-
-Docker (GitHub Container Registry)
-```bash
-docker build -t ghcr.io/<your-org-or-user>/weather-ai:latest .
-docker run -e OPENAI_API_KEY=sk-... -e PORT=8501 -p 8501:8501 ghcr.io/<your-org-or-user>/weather-ai:latest
-# The container entry respects env PORT and HOST, defaults 8501/0.0.0.0
-```
-
-Healthcheck
-- The container exposes a health endpoint used by Docker HEALTHCHECK at `/_stcore/health`.
-- Example: `docker inspect --format='{{json .State.Health}}' <container>` to view health status.
-
----
-
-## Security Notes
-- Network calls use request timeouts
-- Input validated and sanitized (city)
-- API key only read from env/Windows user env (no hardcoding)
-
----
-
-## License
-
-MIT License © 2025 Niraj Meshram
+- A valid OpenAI API key  
+  > Get one from: https://platform.openai.com → Dashboard → API Keys  
+  And store it in your environment:
+  ```bash
+  setx OPENAI_API_KEY "sk-xxxx"     # Windows

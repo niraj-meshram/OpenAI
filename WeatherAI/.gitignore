@@ -1,15 +1,19 @@
 --- Python ---
 
 pycache/
+__pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.sqlite3
 *.db
+*.db-shm
+*.db-wal
 
 --- Virtual envs ---
 
 .venv/
+**/.venv/
 venv/
 env/
 ENV/
@@ -19,6 +23,9 @@ ENV/
 .streamlit/
 .cache/
 pycache/
+
+# Env files
+.env
 
 --- VSCode / PyCharm ---
 
