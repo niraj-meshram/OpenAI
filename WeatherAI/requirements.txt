@@ -2,3 +2,4 @@ openai-agents
 streamlit
 requests
 pandas
+plotly

@@ -65,6 +65,8 @@ def fetch_forecast(city: str, when: Optional[str] = "today") -> Dict[str, Any]:
     idx = 1 if (when == "tomorrow" and len(d0["time"]) > 1) else 0
     return {
         "city": city,
+        "lat": lat,
+        "lon": lon,
         "date": d0["time"][idx],
         "t_max_c": d0["temperature_2m_max"][idx],
         "t_min_c": d0["temperature_2m_min"][idx],

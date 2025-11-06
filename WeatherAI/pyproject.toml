@@ -9,6 +9,7 @@ dependencies = [
   "streamlit",
   "requests",
   "pandas",
+  "plotly",
 ]
 
 [project.scripts]

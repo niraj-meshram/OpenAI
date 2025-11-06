@@ -17,8 +17,8 @@ def format_quick_weather_text(payload: dict, units: str) -> str:
     if units == "°F":
         t_max = c_to_f(t_max)
         t_min = c_to_f(t_min)
-        return f"{city} — {date}: High {t_max:.1f} °F, Low {t_min:.1f} °F"
-    return f"{city} — {date}: High {t_max:.1f} °C, Low {t_min:.1f} °C"
+        return f"{city} {date}: High {t_max:.1f} °F, Low {t_min:.1f} °F"
+    return f"{city} {date}: High {t_max:.1f} °C, Low {t_min:.1f} °C"
 
 
 def make_trend_df(items: list[dict], units_label: str) -> pd.DataFrame:
@@ -39,4 +39,3 @@ def make_trend_df(items: list[dict], units_label: str) -> pd.DataFrame:
         rename = {"month": "Month", "t_max_c": "High (°C)", "t_min_c": "Low (°C)"}
     df = df.rename(columns=rename)
     return df
-
