@@ -1,32 +1,32 @@
-Agent-101: Level 4 — To-Do Agent (CRUD + Filters + Reminders)
+﻿Agent-101: Level 4 â€” To-Do Agent (CRUD + Filters + Reminders)
 
 A tiny but capable console agent that manages a to-do list with:
 
-✅ Complete CRUD: add / list / update / complete / delete
+âœ… Complete CRUD: add / list / update / complete / delete
 
-🗂️ Smart filters: today, this_week, overdue, open, done
+ðŸ—‚ï¸ Smart filters: today, this_week, overdue, open, done
 
-⏰ Reminders: schedule, list, cancel (fires in the console)
+â° Reminders: schedule, list, cancel (fires in the console)
 
-🧰 Agentic mode using the OpenAI Responses API (tools/functions)
+ðŸ§° Agentic mode using the OpenAI Responses API (tools/functions)
 
-🧪 No-deps natural language date parser (today/tomorrow/next Mon/in 2h/10/21 4pm…)
+ðŸ§ª No-deps natural language date parser (today/tomorrow/next Mon/in 2h/10/21 4pmâ€¦)
 
-🧱 Solid engineering: SQLite WAL, typed helpers, input validation, structured logs, graceful background scheduler
+ðŸ§± Solid engineering: SQLite WAL, typed helpers, input validation, structured logs, graceful background scheduler
 
 Works offline (no API key) using a local CLI fallback, and online (agent mode) with your OpenAI key.
 
 
-# Agent-101: Level 3 — To-Do Agent (CRUD + Filters + Reminders)
+# Agent-101: Level 3 â€” To-Do Agent (CRUD + Filters + Reminders)
 
 A tiny but capable **console agent** that manages a to-do list with:
 
-* ✅ **Complete CRUD**: add / list / update / complete / delete
-* 🗂️ **Smart filters**: `today`, `this_week`, `overdue`, `open`, `done`
-* ⏰ **Reminders**: schedule, list, cancel (fires in the console)
-* 🧰 **Agentic mode** using the **OpenAI Responses API** (tools/functions)
-* 🧪 **No-deps natural language date parser** (today/tomorrow/next Mon/`in 2h`/`10/21 4pm`…)
-* 🧱 **Solid engineering**: SQLite WAL, typed helpers, input validation, structured logs, graceful background scheduler
+* âœ… **Complete CRUD**: add / list / update / complete / delete
+* ðŸ—‚ï¸ **Smart filters**: `today`, `this_week`, `overdue`, `open`, `done`
+* â° **Reminders**: schedule, list, cancel (fires in the console)
+* ðŸ§° **Agentic mode** using the **OpenAI Responses API** (tools/functions)
+* ðŸ§ª **No-deps natural language date parser** (today/tomorrow/next Mon/`in 2h`/`10/21 4pm`â€¦)
+* ðŸ§± **Solid engineering**: SQLite WAL, typed helpers, input validation, structured logs, graceful background scheduler
 
 Works **offline** (no API key) using a local CLI fallback, and **online** (agent mode) with your OpenAI key.
 
@@ -58,7 +58,7 @@ Works **offline** (no API key) using a local CLI fallback, and **online** (agent
 ```bash
 # 1) Clone your repo
 git clone https://github.com/niraj-meshram/OpenAI.git
-cd OpenAI/agent-101-Level-2  # or your folder containing agent_todo.py
+cd OpenAI/Agent101AI/agent-101-level-2  # or your folder containing agent_todo.py
 
 # 2) (Optional) create venv
 python -m venv .venv
@@ -131,7 +131,7 @@ snooze reminder 1 by 10 minutes
 cancel reminder 1
 ```
 
-> The reminder scheduler runs in the background and prints a 🔔 line when a reminder fires.
+> The reminder scheduler runs in the background and prints a ðŸ”” line when a reminder fires.
 
 ---
 
@@ -148,9 +148,9 @@ If `OPENAI_API_KEY` is set, the app runs an **agent** that can call these local 
 * `set_reminder(task_id, remind_at)`
 * `cancel_reminder(reminder_id)`
 * `list_reminders(only_pending?)`
-* `parse_when(text)` → returns ISO-UTC
+* `parse_when(text)` â†’ returns ISO-UTC
 
-When you type “add … tomorrow 5pm”, the model will call `parse_when` first, then `add_task` with the parsed ISO-UTC due. If the model doesn’t return text, the app still prints a sensible confirmation (so the CLI never feels silent).
+When you type â€œadd â€¦ tomorrow 5pmâ€, the model will call `parse_when` first, then `add_task` with the parsed ISO-UTC due. If the model doesnâ€™t return text, the app still prints a sensible confirmation (so the CLI never feels silent).
 
 ---
 
@@ -160,7 +160,7 @@ When you type “add … tomorrow 5pm”, the model will call `parse_when` first
 * A daemon thread polls every `SCHEDULER_POLL_SECONDS` (default **15s**)
 * When `remind_at <= now` and `sent=0`, it:
 
-  * prints `🔔 REMINDER: Task #N — <title> (at <iso>)`
+  * prints `ðŸ”” REMINDER: Task #N â€” <title> (at <iso>)`
   * marks the reminder `sent=1`
 * You can **cancel** or **snooze** reminders:
 
@@ -175,12 +175,12 @@ When you type “add … tomorrow 5pm”, the model will call `parse_when` first
 
 `list_tasks_filtered(scope)` supports:
 
-* `open` – incomplete tasks
-* `done` – completed
-* `all` – both
-* `today` – due in today’s UTC window (00:00–24:00)
-* `this_week` – due within Monday..Sunday of the current week (UTC)
-* `overdue` – due < now (and not done)
+* `open` â€“ incomplete tasks
+* `done` â€“ completed
+* `all` â€“ both
+* `today` â€“ due in todayâ€™s UTC window (00:00â€“24:00)
+* `this_week` â€“ due within Monday..Sunday of the current week (UTC)
+* `overdue` â€“ due < now (and not done)
 
 **Notes**
 
@@ -195,30 +195,30 @@ Creating & listing:
 
 ```
 YOU: add sprint review next friday 10am
-ASSISTANT: Task added ✅
+ASSISTANT: Task added âœ…
 
 YOU: list this week
-⬜ 2. sprint review — due in 3d 4h
+â¬œ 2. sprint review â€” due in 3d 4h
 ```
 
 Completing & updating:
 
 ```
 YOU: complete task 2
-ASSISTANT: Task completed ✅
+ASSISTANT: Task completed âœ…
 
 YOU: update task 2 title sprint review (product + eng)
-ASSISTANT: Task updated ✏️
+ASSISTANT: Task updated âœï¸
 ```
 
 Reminders:
 
 ```
 YOU: set reminder for task 2 at in 15 minutes
-ASSISTANT: Reminder set ⏰
+ASSISTANT: Reminder set â°
 
 ...after ~15 min...
-🔔 REMINDER: Task #2 — sprint review (product + eng) (at 2025-10-19T16:45:00+00:00)
+ðŸ”” REMINDER: Task #2 â€” sprint review (product + eng) (at 2025-10-19T16:45:00+00:00)
 ```
 
 ---
@@ -264,7 +264,7 @@ python agent_todo.py
 | column       | type       | notes                      |
 | ------------ | ---------- | -------------------------- |
 | `id`         | INTEGER PK | autoincrement              |
-| `task_id`    | INTEGER    | FK → `tasks(id)` (CASCADE) |
+| `task_id`    | INTEGER    | FK â†’ `tasks(id)` (CASCADE) |
 | `remind_at`  | TEXT       | ISO-8601 UTC string        |
 | `sent`       | INTEGER    | 0 pending, 1 sent          |
 | `created_at` | TEXT       | SQLite default timestamp   |
@@ -282,8 +282,8 @@ python agent_todo.py
   * `task_id` validated and > 0.
   * `due`/`remind_at` normalized to ISO-UTC; warnings surfaced:
 
-    * `due_is_past` → still saved (helpful for logging past events), but we tag it.
-    * `due_parse_failed` → saved without due/remind or rejected (for reminders).
+    * `due_is_past` â†’ still saved (helpful for logging past events), but we tag it.
+    * `due_parse_failed` â†’ saved without due/remind or rejected (for reminders).
 * **No-deps parser**: supports:
 
   * `today 5pm`, `tomorrow 9:30`
@@ -320,7 +320,7 @@ python agent_todo.py test
    update task 1 title buy oat milk
    set reminder for task 1 at in 1 minute
    list reminders
-   # Wait ~1 minute to see 🔔
+   # Wait ~1 minute to see ðŸ””
    complete task 1
    delete task 1
    ```
@@ -329,7 +329,7 @@ python agent_todo.py test
 
 ## Troubleshooting
 
-* **“No model output / nothing printed”**
+* **â€œNo model output / nothing printedâ€**
   The app has fallbacks. If agent mode fails (network/key), it will still print confirmations. Set `LOG_LEVEL=DEBUG` to see details.
 
 * **Reminders not firing**
@@ -347,16 +347,16 @@ python agent_todo.py test
 ## FAQ
 
 **Q: Do I need an API key?**
-A: No. Offline CLI fallback works entirely locally. An API key enables the “agent” behavior (model decides which tool to call).
+A: No. Offline CLI fallback works entirely locally. An API key enables the â€œagentâ€ behavior (model decides which tool to call).
 
 **Q: Can I change storage?**
 A: Yes. Point `TODO_DB_PATH` to another path or adapt the small SQLite helpers.
 
 **Q: How accurate is the natural parser?**
-A: It’s intentionally small and dependency-free. If you need i18n or complex recurrence, plug in `dateparser`/`pytz` or a proper recurrence library.
+A: Itâ€™s intentionally small and dependency-free. If you need i18n or complex recurrence, plug in `dateparser`/`pytz` or a proper recurrence library.
 
 **Q: Can reminders notify outside the console?**
-A: Swap the `print()` in the scheduler for desktop notifications, email, or a webhook. The design isolates reminder firing so it’s easy to extend.
+A: Swap the `print()` in the scheduler for desktop notifications, email, or a webhook. The design isolates reminder firing so itâ€™s easy to extend.
 
 ---
 
@@ -372,5 +372,8 @@ A: Swap the `print()` in the scheduler for desktop notifications, email, or a we
 
 ## License
 
-MIT (or your repo’s preferred license).
+MIT (or your repoâ€™s preferred license).
 Feel free to copy, hack, and ship.
+
+
+

@@ -1,6 +1,6 @@
-# WeatherAI
+﻿# WeatherAI
 
-Agentic weather app with Streamlit and the OpenAI Agents SDK. It answers quick weather questions for today/tomorrow and shows a 6‑month historical trend plus a seasonal baseline outlook using Open‑Meteo.
+Agentic weather app with Streamlit and the OpenAI Agents SDK. It answers quick weather questions for today/tomorrow and shows a 6â€‘month historical trend plus a seasonal baseline outlook using Openâ€‘Meteo.
 
 The UI is built with Streamlit. A simple CLI is included for agent-backed Q&A.
 
@@ -9,9 +9,9 @@ The UI is built with Streamlit. A simple CLI is included for agent-backed Q&A.
 ## Features
 
 - Quick weather: max/min temperature and a code description for today or tomorrow.
-- 6‑month trend: monthly averages for the past 6 months, plus a seasonal baseline for the next 6 months (10‑year monthly climatology).
+- 6â€‘month trend: monthly averages for the past 6 months, plus a seasonal baseline for the next 6 months (10â€‘year monthly climatology).
 - Streamlit UI: interactive tabs, charts, and CSV downloads.
-- CLI: ask questions like “weather in Phoenix today”.
+- CLI: ask questions like â€œweather in Phoenix todayâ€.
 
 ---
 
@@ -19,7 +19,7 @@ The UI is built with Streamlit. A simple CLI is included for agent-backed Q&A.
 
 - Python 3.9+
 - OpenAI API key in `OPENAI_API_KEY` (required for the Agents SDK)
-- Internet access (uses Open‑Meteo public APIs; no key required)
+- Internet access (uses Openâ€‘Meteo public APIs; no key required)
 
 ---
 
@@ -76,33 +76,33 @@ The container exposes Streamlit on port `8501`. Healthcheck probes the internal 
 
 ## Project Structure
 
-- `streamlit_app.py` — Streamlit entry that renders the UI.
-- `weather_ai/ui/app.py` — Streamlit UI logic and state.
-- `weather_ai/tools/api.py` — Calls to Open‑Meteo (geocoding, forecast, archive) and aggregation.
-- `weather_ai/agents/weather_agent.py` — Agent and tools wired via OpenAI Agents SDK.
-- `weather_ai/utils/units.py` — Unit conversions and small formatting/helpers.
-- `weather_ai/cli.py` — Minimal CLI using the agent runner.
-- `tests/test_units.py` — Unit tests for conversions and formatting.
-- `Dockerfile` — Multi‑stage image with healthcheck.
-- `Makefile` — Helper targets for install, run, tests, and Docker.
+- `streamlit_app.py` â€” Streamlit entry that renders the UI.
+- `weather_ai/ui/app.py` â€” Streamlit UI logic and state.
+- `weather_ai/tools/api.py` â€” Calls to Openâ€‘Meteo (geocoding, forecast, archive) and aggregation.
+- `weather_ai/agents/weather_agent.py` â€” Agent and tools wired via OpenAI Agents SDK.
+- `weather_ai/utils/units.py` â€” Unit conversions and small formatting/helpers.
+- `weather_ai/cli.py` â€” Minimal CLI using the agent runner.
+- `tests/test_units.py` â€” Unit tests for conversions and formatting.
+- `Dockerfile` â€” Multiâ€‘stage image with healthcheck.
+- `Makefile` â€” Helper targets for install, run, tests, and Docker.
 
 ---
 
 ## Make Targets
 
-- `make venv` — Create `.venv` virtual environment.
-- `make install` — Activate venv and install requirements.
-- `make run` — Start Streamlit app.
-- `make run-cli` — Example CLI invocation.
-- `make test` — Run unit tests.
-- `make docker-build` / `make docker-run` — Build and run the container.
+- `make venv` â€” Create `.venv` virtual environment.
+- `make install` â€” Activate venv and install requirements.
+- `make run` â€” Start Streamlit app.
+- `make run-cli` â€” Example CLI invocation.
+- `make test` â€” Run unit tests.
+- `make docker-build` / `make docker-run` â€” Build and run the container.
 
 ---
 
 ## Notes & Limits
 
-- Forecast data comes from Open‑Meteo’s public API. Trend/outlook uses monthly averages; the “next 6 months” reflects a seasonal baseline (not a deterministic forecast).
-- The app requires `OPENAI_API_KEY` for the Agents SDK even though Open‑Meteo itself does not need a key.
+- Forecast data comes from Openâ€‘Meteoâ€™s public API. Trend/outlook uses monthly averages; the â€œnext 6 monthsâ€ reflects a seasonal baseline (not a deterministic forecast).
+- The app requires `OPENAI_API_KEY` for the Agents SDK even though Openâ€‘Meteo itself does not need a key.
 - Timeouts are set on outbound requests. Inputs are sanitized.
 
 ---
@@ -115,7 +115,7 @@ The container exposes Streamlit on port `8501`. Healthcheck probes the internal 
 
 - Network errors/timeouts:
   - Corporate proxy: set `HTTP_PROXY`/`HTTPS_PROXY` in your environment. For Docker builds, pass build args `HTTP_PROXY`, `HTTPS_PROXY`, `PIP_INDEX_URL`, `PIP_EXTRA_INDEX_URL`, `PIP_TRUSTED_HOST` as needed (see Dockerfile).
-  - API outages: data comes from Open‑Meteo; retry later if unreachable.
+  - API outages: data comes from Openâ€‘Meteo; retry later if unreachable.
 
 - Windows venv activation blocked:
   - Use PowerShell: `..\.venv\Scripts\Activate.ps1`. If blocked, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` and retry, or use CMD: `..\.venv\Scripts\activate.bat`.
@@ -139,4 +139,5 @@ The container exposes Streamlit on port `8501`. Healthcheck probes the internal 
 ## Security
 
 This project does not store keys in the repo. At runtime, the app looks for the key in this order: environment variable, Streamlit secrets, then optional `.env`. See `SECURITY.md` for details.
+
 

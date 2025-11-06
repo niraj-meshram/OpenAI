@@ -1,54 +1,54 @@
-# Agent-101 — Level 5 (Planning + Reflection + Hybrid Autonomy)
+﻿# Agent-101 â€” Level 5 (Planning + Reflection + Hybrid Autonomy)
 
-This level upgrades the agent from a simple “command executor” to an **autonomous planner** with **lightweight memory** and **self-reflection**. The agent can now interpret **high-level goals**, decompose them into multiple tasks, save them to the SQLite DB, and reflect on its actions for gradual improvement.
+This level upgrades the agent from a simple â€œcommand executorâ€ to an **autonomous planner** with **lightweight memory** and **self-reflection**. The agent can now interpret **high-level goals**, decompose them into multiple tasks, save them to the SQLite DB, and reflect on its actions for gradual improvement.
 
 ---
 
-## 🔥 New Capabilities in Level-5
+## ðŸ”¥ New Capabilities in Level-5
 
 | Feature | Description |
 |--------|-------------|
-| ✅ Goal Planning (`plan <goal>`) | Breaks a high-level instruction into actionable subtasks |
-| ✅ Hybrid Mode | Uses GPT when available, otherwise falls back to rule-based planning |
-| ✅ Reflection Memory | Stores short “lessons” when planning or completing tasks |
-| ✅ `reflect` Command | View recent learnings |
-| ✅ Persistent Memory | Stored in `agent_memory.json` |
-| ✅ Mode Awareness | (online/offline) can later be displayed to user |
+| âœ… Goal Planning (`plan <goal>`) | Breaks a high-level instruction into actionable subtasks |
+| âœ… Hybrid Mode | Uses GPT when available, otherwise falls back to rule-based planning |
+| âœ… Reflection Memory | Stores short â€œlessonsâ€ when planning or completing tasks |
+| âœ… `reflect` Command | View recent learnings |
+| âœ… Persistent Memory | Stored in `agent_memory.json` |
+| âœ… Mode Awareness | (online/offline) can later be displayed to user |
 
 ---
 
-## 📁 Project Structure
+## ðŸ“ Project Structure
 
 agent-101-level-5/
-├── agent_todo.py # main entrypoint (CLI + agent path)
-├── planner.py # hybrid goal decomposition (GPT + fallback)
-├── reflection.py # minimal memory + append-only log
-├── agent_memory.json # lightweight persistent memory
-├── todos.db # sqlite database (tasks + reminders)
-└── README.md # you are here
+â”œâ”€â”€ agent_todo.py # main entrypoint (CLI + agent path)
+â”œâ”€â”€ planner.py # hybrid goal decomposition (GPT + fallback)
+â”œâ”€â”€ reflection.py # minimal memory + append-only log
+â”œâ”€â”€ agent_memory.json # lightweight persistent memory
+â”œâ”€â”€ todos.db # sqlite database (tasks + reminders)
+â””â”€â”€ README.md # you are here
 
 
 ---
 
-## 🧠 Architecture Overview
+## ðŸ§  Architecture Overview
 
 User
-│
-├─ "add/complete/update/list" → standard to-do logic (Level 4)
-│
-├─ "plan ..." ──────► planner.py
-│ │
-│ ├─ GPT mode (if installed + OPENAI_API_KEY)
-│ └─ local fallback (no network)
-│
-├─ tasks inserted into todos.db
-│
-└─ reflection.py logs "planned N tasks" + "completed task X"
+â”‚
+â”œâ”€ "add/complete/update/list" â†’ standard to-do logic (Level 4)
+â”‚
+â”œâ”€ "plan ..." â”€â”€â”€â”€â”€â”€â–º planner.py
+â”‚ â”‚
+â”‚ â”œâ”€ GPT mode (if installed + OPENAI_API_KEY)
+â”‚ â””â”€ local fallback (no network)
+â”‚
+â”œâ”€ tasks inserted into todos.db
+â”‚
+â””â”€ reflection.py logs "planned N tasks" + "completed task X"
 
 
 ---
 
-## 🧪 Usage
+## ðŸ§ª Usage
 
 ### Plan a high-level goal
 
@@ -68,7 +68,7 @@ reflect
 
 ---
 
-## 🌐 Hybrid Mode
+## ðŸŒ Hybrid Mode
 
 | Condition | Behavior |
 |----------|----------|
@@ -79,7 +79,7 @@ reflect
 
 ---
 
-## ⚙️ Running
+## âš™ï¸ Running
 
 ```bash
 python agent_todo.py
@@ -92,9 +92,11 @@ python agent_todo.py
 
 | Milestone                       | Completed        |
 | ------------------------------- | ---------------- |
-| CRUD Tasks + Filtering          | ✅ (from Level 4) |
-| Local + Online dual mode        | ✅                |
-| Goal → subtasks planning        | ✅                |
-| Reflection / memory             | ✅                |
-| Hybrid execution (offline safe) | ✅                |
-| Agent readiness for Level 6     | ✅                |
+| CRUD Tasks + Filtering          | âœ… (from Level 4) |
+| Local + Online dual mode        | âœ…                |
+| Goal â†’ subtasks planning        | âœ…                |
+| Reflection / memory             | âœ…                |
+| Hybrid execution (offline safe) | âœ…                |
+| Agent readiness for Level 6     | âœ…                |
+
+
