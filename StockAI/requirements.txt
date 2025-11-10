@@ -1,0 +1,7 @@
+mcp
+yfinance
+pandas
+numpy
+openai
+requests
+certifi-win32

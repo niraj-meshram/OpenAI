@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "stockai": {
+      "command": "python",
+      "args": ["-m", "stockai_mcp.server"],
+      "transport": "stdio",
+      "env": {}
+    }
+  }
+}
+
