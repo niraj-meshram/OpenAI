@@ -22,7 +22,6 @@ ENV/
 
 .streamlit/
 .cache/
-pycache/
 
 # Env files
 .env
