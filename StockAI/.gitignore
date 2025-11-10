@@ -1,0 +1,48 @@
+--- Python ---
+
+pycache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+
+--- Virtual envs ---
+
+.venv/
+**/.venv/
+venv/
+env/
+ENV/
+
+--- Streamlit cache ---
+
+.streamlit/
+.cache/
+pycache/
+
+# Env files
+.env
+
+--- VSCode / PyCharm ---
+
+.vscode/
+.idea/
+
+--- OS junk ---
+
+.DS_Store
+Thumbs.db
+
+--- Logs ---
+
+*.log
+*.out
+*.err
+logs/
+
+
+---
