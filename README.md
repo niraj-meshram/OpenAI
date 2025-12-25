@@ -7,6 +7,7 @@ It includes a production‑style Weather app, plus a series of Agent101 levels a
 - `WeatherAI` - Python app with CLI/Streamlit UI, tests, Dockerfile, and CI
 - `Agent101AI/agent-101-level-1..6` - step-by-step agent demos (SQLite To-Do, planning, reflection)
 - `RestuarantNameGenerator` - Streamlit + LangChain mini-app that proposes a themed restaurant concept and menu
+- `StockAI` - MCP stdio server exposing stock quote/history tools plus a small OpenAI-powered CLI agent
 - `TutorAI` - small triage/sanity demo scripts
 
 ## Prerequisites
